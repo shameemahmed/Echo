@@ -443,21 +443,25 @@ color:#f5f5f5;
 
 position:absolute;
 
-bottom:75px;
+right:400px;
 
-left:50%;
+top:50%;
 
-transform:translateX(-50%);
+transform:translateY(-50%);
 
-width:400px;
+width:8px;
 
-height:4px;
+height:250px;
 
-background:rgba(255,255,255,.15);
+background:rgba(255,255,255,.08);
+
+border-radius:999px;
 
 overflow:hidden;
 
-border-radius:5px;
+z-index:999;
+
+border:1px solid rgba(255,255,255,.1);
 
 }
 
@@ -465,23 +469,45 @@ border-radius:5px;
 
 content:"";
 
-display:block;
+position:absolute;
 
-height:100%;
+bottom:0;
+
+left:0;
 
 width:100%;
 
-background:#00d9ff;
+height:100%;
 
-animation:qte 5s linear forwards;
+background:linear-gradient(
+to top,
+#00d9ff,
+#7fefff,
+white
+);
+
+box-shadow:
+0 0 8px #00d9ff,
+0 0 20px #00d9ff,
+0 0 40px rgba(0,217,255,.4);
+
+animation:qte 7s linear forwards;
 
 }
 
 @keyframes qte{
 
-from{width:100%;}
+from{
 
-to{width:0%;}
+height:100%;
+
+}
+
+to{
+
+height:0%;
+
+}
 
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript">// Load GSAP
 var script = document.createElement("script");
@@ -691,11 +717,13 @@ z-index:100;
 [[Trust Echo]]
 [[Wake immediately]]
 
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="StoryCaption" tags="" position="875,325" size="100,100">&lt;div id=&quot;dialogBox&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="StoryCaption" tags="" position="875,325" size="100,100">&lt;&lt;if !$hideDialog&gt;&gt;
+&lt;div id=&quot;dialogBox&quot;&gt;
 &lt;div class=&quot;echoText&quot;&gt;
 &lt;&lt;print $sceneText&gt;&gt;
 &lt;/div&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="4" name="SceneLayout" tags="" position="625,450" size="100,100">&lt;div class=&quot;scene&quot;&gt; 
+&lt;/div&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="4" name="SceneLayout" tags="" position="625,450" size="100,100">&lt;div class=&quot;scene&quot;&gt; 
  &lt;img @src=&quot;&#39;assets/&#39; + $bg&quot; class=&quot;bg&quot;&gt;
  &lt;div class=&quot;sceneNarration&quot;&gt;
         &lt;&lt;= $sceneNarration &gt;&gt;
@@ -783,12 +811,14 @@ z-index:100;
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="9" name="Road Crossing" tags="" position="700,1200" size="100,100">&lt;&lt;set $bg=&quot;roadcrossing.png&quot;&gt;&gt;
 &lt;&lt;set $music=&quot;road.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;&quot;&gt;&gt;
-&lt;&lt;set $sceneText=&quot;Echo:Safe crossing window detected..&quot;&gt;&gt;
+&lt;&lt;set $sceneText=&quot;Echo:Safe crossing window not detected. Move back two steps to avoid impact.&quot;&gt;&gt;
 
 &lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
 &lt;&lt;run setup.setOrbColor(&quot;yellow&quot;)&gt;&gt;
 &lt;div id=&quot;timerBar&quot;&gt;&lt;/div&gt;
+
 &lt;div class=&quot;choices&quot;&gt;
+
 [[Wait for Echo signal -&gt;Street Musician]]
 [[Cross independently-&gt;Hospital]]
 
@@ -799,7 +829,7 @@ setup.choiceTimer = setTimeout(function(){
 
     Engine.play(&quot;Hospital&quot;);
 
-},5000);
+},7000);
 &gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="Commute" tags="" position="500,1300" size="100,100">&lt;&lt;set $bg=&quot;commute.png&quot;&gt;&gt;
 &lt;&lt;set $music=&quot;commute.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;&quot;&gt;&gt;
@@ -868,7 +898,7 @@ z-index:100;
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="14" name="Street Musician" tags="" position="700,1325" size="100,100">&lt;&lt;set $bg=&quot;streetmusician.png&quot;&gt;&gt;
 &lt;&lt;set $music=&quot;musician.mp3&quot;&gt;&gt;
-&lt;&lt;set $sceneNarration=&quot;A musician performs emotionally.&quot;&gt;&gt;
+&lt;&lt;set $sceneNarration=&quot;A musician performs on the street.&quot;&gt;&gt;
 &lt;&lt;set $sceneText=&quot;Echo:Crowd congestion detected. Alternate route recommended to reach work early.&quot;&gt;&gt;
 
 &lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
@@ -944,42 +974,22 @@ z-index:100;
 &lt;&lt;set $music=&quot;date.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;&quot;&gt;&gt;
 &lt;&lt;set $sceneText=&quot;Echo:Compatibility score available: 80%&quot;&gt;&gt;
-
 &lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
 &lt;&lt;run setup.setOrbColor(&quot;cyan&quot;)&gt;&gt;
-&lt;div style=&quot;
-position:absolute;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
-z-index:100;
-&quot;&gt;
+
 &lt;div class=&quot;choices&quot;&gt;
 [[Follow conversation script -&gt;Propose][$obedience += 1]]
 [[Talk Naturally-&gt;Escalation][$humanity += 1]]
 
 &lt;/div&gt;
 
-&lt;&lt;run
-setup.choiceTimer = setTimeout(function(){
-
-    Engine.play(&quot;Propose&quot;);
-
-},5000);
-&gt;&gt;</tw-passagedata><tw-passagedata pid="19" name="Escalation" tags="" position="350,2000" size="100,100">&lt;&lt;set $bg=&quot;escalation.png&quot;&gt;&gt;
+</tw-passagedata><tw-passagedata pid="19" name="Escalation" tags="" position="350,2000" size="100,100">&lt;&lt;set $bg=&quot;escalation.png&quot;&gt;&gt;
 &lt;&lt;set $music=&quot;date.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;&quot;&gt;&gt;
 &lt;&lt;set $sceneText=&quot;Echo:Escalation probability rising.&quot;&gt;&gt;
-
 &lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
 &lt;&lt;run setup.setOrbColor(&quot;yellow&quot;)&gt;&gt;
-&lt;div style=&quot;
-position:absolute;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
-z-index:100;
-&quot;&gt;
+&lt;div id=&quot;timerBar&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;choices&quot;&gt;
 [[Follow de-escalation script -&gt;Propose][$obedience += 1]]
 [[Continue authentic argument-&gt;Reject][$humanity += 1]]
@@ -989,9 +999,9 @@ z-index:100;
 &lt;&lt;run
 setup.choiceTimer = setTimeout(function(){
 
-    Engine.play(&quot;Propose&quot;);
+    Engine.play(&quot;Reject&quot;);
 
-},5000);
+},7000);
 &gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="Propose" tags="" position="625,1925" size="100,100">&lt;&lt;set $bg=&quot;propose.png&quot;&gt;&gt;
 &lt;&lt;set $music=&quot;date.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;&quot;&gt;&gt;
@@ -1028,7 +1038,7 @@ z-index:100;
 
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="22" name="Musician" tags="" position="625,2050" size="100,100">&lt;&lt;set $bg=&quot;music.png&quot;&gt;&gt;
-&lt;&lt;set $music=&quot;music.mp3&quot;&gt;&gt;
+&lt;&lt;set $music=&quot;music2.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;&quot;&gt;&gt;
 &lt;&lt;set $sceneText=&quot;Echo: Recommended playlist added to music app&quot;&gt;&gt;
 
@@ -1046,7 +1056,7 @@ z-index:100;
 [[Choose Music Yourself-&gt;Evening][$awareness += 1]]
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="23" name="Evening" tags="" position="625,2175" size="100,100">&lt;&lt;set $bg=&quot;evening.png&quot;&gt;&gt;
-&lt;&lt;set $music=&quot;music.mp3&quot;&gt;&gt;
+&lt;&lt;set $music=&quot;music2.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;&quot;&gt;&gt;
 &lt;&lt;set $sceneText=&quot;Echo:Stress indicators elevated.Recommended emotional stabilization mode.&quot;&gt;&gt;
 
@@ -1064,7 +1074,7 @@ z-index:100;
 [[Sit with feelings naturally-&gt;Memory][$awareness += 1]]
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="24" name="Memory" tags="" position="625,2350" size="100,100">&lt;&lt;set $bg=&quot;evening.png&quot;&gt;&gt;
-&lt;&lt;set $music=&quot;music.mp3&quot;&gt;&gt;
+&lt;&lt;set $music=&quot;music2.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;Player suddenly feels sadness.&quot;&gt;&gt;
 &lt;&lt;set $sceneText=&quot;Echo: I can reduce the emotional intensity associated with this memory.&quot;&gt;&gt;
 
@@ -1082,9 +1092,8 @@ z-index:100;
 [[Keep Memory-&gt;Auto Food][$humanity += 1]]
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="25" name="Auto Food" tags="" position="625,2550" size="100,100">&lt;&lt;set $bg=&quot;autofood.png&quot;&gt;&gt;
-&lt;&lt;set $music=&quot;music.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;.&quot;&gt;&gt;
-&lt;&lt;set $sceneText=&quot;Echo: I can order food which is optimal for this situation.&quot;&gt;&gt;
+&lt;&lt;set $sceneText=&quot;Echo: I can order food which has optimal nutrients for dinner.&quot;&gt;&gt;
 
 &lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
 
@@ -1102,7 +1111,7 @@ z-index:100;
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="26" name="Auto Food1" tags="" position="625,2675" size="100,100">&lt;&lt;set $bg=&quot;autofood.png&quot;&gt;&gt;
 &lt;&lt;set $music=&quot;autofood1.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;.&quot;&gt;&gt;
-&lt;&lt;set $sceneText=&quot;Echo: I Strongly recommend you accept my food suggestion.&quot;&gt;&gt;
+&lt;&lt;set $sceneText=&quot;Echo: I Strongly recommend you accept my food suggestion to maintain optimal health profile.&quot;&gt;&gt;
 
 &lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
 &lt;&lt;run setup.setOrbColor(&quot;yellow&quot;)&gt;&gt;
@@ -1124,13 +1133,7 @@ z-index:100;
 
 &lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
 &lt;&lt;run setup.setOrbColor(&quot;cyan&quot;)&gt;&gt;
-&lt;div style=&quot;
-position:absolute;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
-z-index:100;
-&quot;&gt;
+&lt;div id=&quot;timerBar&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;choices&quot;&gt;
 [[Let Echo reply -&gt;Mom][$obedience += 1]]
 [[Rewrite-&gt;Auto Reply2][$humanity += 1]]
@@ -1142,7 +1145,7 @@ setup.choiceTimer = setTimeout(function(){
 
     Engine.play(&quot;Auto Reply2&quot;);
 
-},5000);
+},7000);
 &gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="Auto Food2" tags="" position="625,2800" size="100,100">&lt;&lt;set $bg=&quot;autofood.png&quot;&gt;&gt;
 &lt;&lt;set $music=&quot;autofood1.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;.&quot;&gt;&gt;
@@ -1166,7 +1169,7 @@ z-index:100;
 &lt;&lt;set $sceneText=&quot;Mom: Do you remember the story i used to tell you in your chidhood? &quot;&gt;&gt;
 
 &lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
-&lt;&lt;run setup.setOrbColor(&quot;cyan&quot;)&gt;&gt;
+&lt;&lt;run setup.setOrbColor(&quot;yellow&quot;)&gt;&gt;
 &lt;div style=&quot;
 position:absolute;
 bottom:40px;
@@ -1202,7 +1205,7 @@ z-index:100;
 &lt;&lt;set $sceneText=&quot;Mom: Are you not able to recollect? &quot;&gt;&gt;
 
 &lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
-&lt;&lt;run setup.setOrbColor(&quot;cyan&quot;)&gt;&gt;
+&lt;&lt;run setup.setOrbColor(&quot;red&quot;)&gt;&gt;
 &lt;div style=&quot;
 position:absolute;
 bottom:40px;
@@ -1211,7 +1214,7 @@ transform:translateX(-50%);
 z-index:100;
 &quot;&gt;
 &lt;div class=&quot;choices&quot;&gt;
-[[&quot;There was an old tree that knew every.... -&gt;Story3]]
+[[There was an old tree that knew every.... -&gt;Story3]]
 
 
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="32" name="Story3" tags="" position="825,3300" size="100,100">&lt;&lt;set $bg=&quot;story.png&quot;&gt;&gt;
@@ -1238,7 +1241,7 @@ z-index:100;
 &lt;&lt;set $sceneText=&quot;Mom: ...... &quot;&gt;&gt;
 
 &lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
-&lt;&lt;run setup.setOrbColor(&quot;cyan&quot;)&gt;&gt;
+&lt;&lt;run setup.setOrbColor(&quot;yellow&quot;)&gt;&gt;
 &lt;div style=&quot;
 position:absolute;
 bottom:40px;
@@ -1257,13 +1260,7 @@ z-index:100;
 
 &lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
 &lt;&lt;run setup.setOrbColor(&quot;cyan&quot;)&gt;&gt;
-&lt;div style=&quot;
-position:absolute;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
-z-index:100;
-&quot;&gt;
+&lt;div id=&quot;timerBar&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;choices&quot;&gt;
 [[Let Echo tell story -&gt;Story7][$obedience += 1]]
 [[Try to remember -&gt;Story6][$humanity += 1]]
@@ -1276,7 +1273,7 @@ setup.choiceTimer = setTimeout(function(){
 
     Engine.play(&quot;Story7&quot;);
 
-},5000);
+},7000);
 &gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="Story6" tags="" position="825,3675" size="100,100">&lt;&lt;set $bg=&quot;story2.png&quot;&gt;&gt;
 &lt;&lt;set $music=&quot;autofood1.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;&quot;&gt;&gt;
@@ -1313,11 +1310,11 @@ z-index:100;
 [[Complete -&gt;Ending]]
 
 
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="37" name="Ending" tags="" position="1050,3925" size="100,100">&lt;&lt;if $Obedience &gt;= $humanity and $Obedience &gt;= $awareness&gt;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="37" name="Ending" tags="" position="1050,3925" size="100,100">&lt;&lt;if $obedience &gt;= $humanity and $obedience &gt;= $awareness&gt;&gt;
 
     &lt;&lt;goto &quot;Ending_Echo&quot;&gt;&gt;
 
-&lt;&lt;elseif $humanity &gt;= $Obedience and $humanity &gt;= $awareness&gt;&gt;
+&lt;&lt;elseif $humanity &gt;= $obedience and $humanity &gt;= $awareness&gt;&gt;
 
     &lt;&lt;goto &quot;Ending_Human&quot;&gt;&gt;
 
@@ -1325,7 +1322,24 @@ z-index:100;
 
     &lt;&lt;goto &quot;Ending_Aware&quot;&gt;&gt;
 
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="Ending_Echo" tags="" position="1175,3950" size="100,100">&lt;&lt;set $bg=&quot;EchoEnding.png&quot;&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="Ending_Echo" tags="" position="1175,3950" size="100,100">&lt;&lt;set $hideDialog = true&gt;&gt;
+&lt;&lt;set $bg=&quot;EchoEnding.png&quot;&gt;&gt;
+&lt;&lt;set $music=&quot;echoending.mp3&quot;&gt;&gt;
+&lt;&lt;set $sceneNarration=&quot;&quot;&gt;&gt;
+
+&lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
+
+&lt;&lt;run setup.setOrbColor(&quot;cyan&quot;)&gt;&gt;
+&lt;div style=&quot;
+position:absolute;
+bottom:40px;
+left:50%;
+transform:translateX(-50%);
+z-index:100;
+&quot;&gt;
+&lt;div class=&quot;choices&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="39" name="Ending_Human" tags="" position="1050,4075" size="100,100">&lt;&lt;set $hideDialog = true&gt;&gt;
+&lt;&lt;set $bg=&quot;Humanity.png&quot;&gt;&gt;
 &lt;&lt;set $music=&quot;echoending.mp3&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;&quot;&gt;&gt;
 &lt;&lt;set $sceneText=&quot;&quot;&gt;&gt;
@@ -1340,12 +1354,8 @@ transform:translateX(-50%);
 z-index:100;
 &quot;&gt;
 &lt;div class=&quot;choices&quot;&gt;
-
-
-
-
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="39" name="Ending_Human" tags="" position="1050,4075" size="100,100">&lt;&lt;set $bg=&quot;story3.png&quot;&gt;&gt;
-&lt;&lt;set $music=&quot;echoending.mp3&quot;&gt;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="40" name="Ending_Aware" tags="" position="925,4075" size="100,100">&lt;&lt;set $hideDialog = true&gt;&gt;
+&lt;&lt;set $bg=&quot;awareness.png&quot;&gt;&gt;
 &lt;&lt;set $sceneNarration=&quot;&quot;&gt;&gt;
 &lt;&lt;set $sceneText=&quot;&quot;&gt;&gt;
 
@@ -1359,28 +1369,6 @@ transform:translateX(-50%);
 z-index:100;
 &quot;&gt;
 &lt;div class=&quot;choices&quot;&gt;
-
-
-
-
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="40" name="Ending_Aware" tags="" position="925,4075" size="100,100">&lt;&lt;set $bg=&quot;story3.png&quot;&gt;&gt;
-&lt;&lt;set $sceneNarration=&quot;&quot;&gt;&gt;
-&lt;&lt;set $sceneText=&quot;&quot;&gt;&gt;
-
-&lt;&lt;include &quot;SceneLayout&quot;&gt;&gt;
-&lt;&lt;run setup.setOrbColor(&quot;cyan&quot;)&gt;&gt;
-&lt;div style=&quot;
-position:absolute;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
-z-index:100;
-&quot;&gt;
-&lt;div class=&quot;choices&quot;&gt;
-
-
-
-
 &lt;/div&gt;</tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
 	/*! SugarCube JS */
